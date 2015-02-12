@@ -20,7 +20,7 @@ function get_cart_count() {
  **/
 if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', get_option( 'active_plugins' ) ) ) ) {	
 	global $woocommerce;  	
-  	echo "Cart Count: ".$woocommerce->cart->cart_contents_count;
+  	return $woocommerce->cart->cart_contents_count;
 	}
 }
 add_shortcode( 'cart_count', 'get_cart_count' );
