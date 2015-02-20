@@ -30,8 +30,8 @@
     if (is_array($terms)){
       foreach ( $terms as $term ) {
         $draught_links[] = $term->$vals['term'];
-        return "<br />". $draught_links[0];
       }
+      return implode (", ", $draught_links);
     }
   }
   add_shortcode( 'get_terms', 'get_post_terms' );
