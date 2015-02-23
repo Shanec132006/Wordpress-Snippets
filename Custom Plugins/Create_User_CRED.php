@@ -17,17 +17,13 @@
 add_action('cred_before_save_data', 'my_success_action',10,1);
 function my_success_action($form_data)
 {
-// if a specific form
-if ($form_data['id']==581)
- 
-{
-
-	$username =  $_POST['username'] ;
-	$email    =  $_POST['email'];
-	$password =  $_POST['password'];
-
-	wp_create_user( $username, $password, $email );	
-
-}
+	// if a specific form
+	if ($form_data['id']==581)	 
+	{
+		$username =  $_POST['username'] ;
+		$email    =  $_POST['email'];
+		$password =  $_POST['password'];
+		wp_create_user( $username, $password, $email );	
+	}
 }
 ?>
