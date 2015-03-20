@@ -4,7 +4,7 @@
  * Plugin Name: Get Post Terms Shortcode.
  * Plugin URI: http://URI_Of_Page_Describing_Plugin_and_Updates
  * Description: Enables a shortcode for the use of the get_the_terms() function.
- * Version: 1
+ * Version: 1.1
  * Author: Shane Campbell
  * Author URI: http://URI_Of_The_Plugin_Author
  * Text Domain: Optional. Plugin's text domain for localization. Example: mytextdomain
@@ -13,26 +13,33 @@
  * License: A short license name. Example: GPL2
  */
 
-// Add Shortcode [get_terms post_id="" taxonomy="" term=""]
-  function get_post_terms( $atts ) {
+// Add Shortcode [get_terms post_id="" taxonomy="" term="" depth=""]
 
-    $vals =  shortcode_atts(
-      array(
-        'post_id' => '',
-        'taxonomy' => '',
-        'term' => '',
-      ), $atts );
-
-    // Code
-    $terms = get_the_terms( $vals["post_id"], $vals["taxonomy"] );
-
-    $draught_links = array();
-    if (is_array($terms)){
-      foreach ( $terms as $term ) {
-        $draught_links[] = $term->$vals['term'];
-      }
-      return implode (", ", $draught_links);
-    }
-  }
-  add_shortcode( 'get_terms', 'get_post_terms' );
+function get_post_terms( $atts ) { 
+  $vals =  shortcode_atts(
+    array(
+      'post_id' => '',
+      'taxonomy' => '',
+      'term' => '',
+      'depth'=> ''
+    ), $atts ); 
+  	// Code
+	$terms = get_the_terms( $vals["post_id"], $vals["taxonomy"] ); 
+	$draught_links = array();
+	if (is_array($terms)){
+	  foreach ( $terms as $term ) {
+	    $draught_links[] = $term->$vals['term'];	     
+	  }
+	  if ($vals['depth'] !=''){
+	    if($vals['depth'] < count($draught_links)){
+	        return $draught_links[$vals['depth']];	         
+	    }else{
+	        return "Nothing at this depth";
+	    	}	 
+	}else{
+	    return implode (", ", $draught_links);
+	  }	   
+	} 
+}
+add_shortcode( 'get_terms', 'get_post_terms' );
 ?>
